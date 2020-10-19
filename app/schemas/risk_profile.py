@@ -1,16 +1,24 @@
-from enum import Enum
+import enum
 
 from pydantic import BaseModel
 
 
-class Score(str, Enum):
+class Insurance(enum.Enum):
+    auto = enum.auto()
+    disability = enum.auto()
+    home = enum.auto()
+    life = enum.auto()
+
+
+class ScoreEnum(str, enum.Enum):
+    ineligible = "ineligible"
     economic = "economic"
     regular = "regular"
     responsible = "responsible"
 
 
 class RiskProfile(BaseModel):
-    auto: Score
-    disability: Score
-    home: Score
-    life: Score
+    auto: ScoreEnum
+    disability: ScoreEnum
+    home: ScoreEnum
+    life: ScoreEnum

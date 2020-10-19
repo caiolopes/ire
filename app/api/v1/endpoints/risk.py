@@ -3,17 +3,14 @@ from typing import Any
 from fastapi import APIRouter
 
 from app import schemas
+from app.services.risk import RiskService
 
 router = APIRouter()
 
 
 @router.post("/", response_model=schemas.RiskProfile)
 def create_risk_profile(profile: schemas.UserProfile) -> Any:
-    from app.schemas.risk_profile import Score
+    service = RiskService(profile)
+    risk = service.apply_rules()
 
-    return schemas.RiskProfile(
-        auto=Score.regular,
-        disability=Score.regular,
-        home=Score.regular,
-        life=Score.regular,
-    )
+    return risk

@@ -1,4 +1,5 @@
 fastapi==0.61.1
 uvicorn==0.12.1
-
+requests==2.24.0
 pydantic==1.6.*
+structlog==20.1.0
