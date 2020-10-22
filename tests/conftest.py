@@ -8,11 +8,11 @@ def profile_payload() -> dict:
     :return: dict with a profile correctly filled
     """
     return {
-        "age": 25,
-        "dependents": 0,
-        "income": 50000,
-        "marital_status": "single",
-        "risk_questions": [0, 0, 0],
-        "house": {"ownership_status": "mortgaged"},
-        "vehicle": {"year": 2015},
+        "age": 35,
+        "dependents": 2,
+        "house": {"ownership_status": "owned"},
+        "income": 0,
+        "marital_status": "married",
+        "risk_questions": [0, 1, 0],
+        "vehicle": {"year": 2018},
     }

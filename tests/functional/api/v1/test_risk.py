@@ -20,8 +20,13 @@ def test_ok(client, profile_payload, endpoint_url):
         endpoint_url,
         json=profile_payload,
     )
-    print(response.text)
     assert response.status_code == 200
+    assert response.json() == {
+        "auto": "regular",
+        "disability": "ineligible",
+        "home": "economic",
+        "life": "regular",
+    }
 
 
 def test_validation_error(client, profile_payload, endpoint_url):
