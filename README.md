@@ -31,3 +31,13 @@ uvicorn main:app --reload --app-dir ire
 Interactive documentation will be available on:
 
 http://127.0.0.1:8000/docs
+
+## Endpoints
+
+POST /api/v1/risk
+
+Example call:
+
+```
+curl -X POST "http://localhost:8000/api/v1/risk/" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"age\":35,\"dependents\":2,\"house\":{\"ownership_status\":\"owned\"},\"income\":0,\"marital_status\":\"married\",\"risk_questions\":[0,1,0],\"vehicle\":{\"year\":2018}}"
+```
