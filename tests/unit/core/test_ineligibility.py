@@ -1,76 +1,74 @@
+from typing import Optional, Dict
 import pytest
 from ire.schemas import UserProfile, ScoreEnum, Insurance
 from ire.core.ineligibility import BasicCheck, AgeCheck
 
 
+CAR = {"year": 2015}
+HOUSE = {"ownership_status": "owned"}
+
+
+def modify_risk(risk: Dict, ineligible=None) -> Optional[Dict]:
+    if not ineligible:
+        return risk
+
+    return {
+        k: ScoreEnum.ineligible if k.name in ineligible else v for k, v in risk.items()
+    }
+
+
 @pytest.fixture
-def risk():
+def all_regular_risk():
+    """
+    All regular risk dictionary
+    """
     return {i: ScoreEnum.regular for i in Insurance}
 
 
 @pytest.mark.parametrize(
-    "income,vehicle,house",
+    "income,vehicle,house,ineligible",
     [
-        (100000, None, None),
-        (0, {"year": 2015}, None),
-        (0, None, {"ownership_status": "owned"}),
+        # ineligible for all insurances
+        (0, None, None, ["disability", "auto", "home"]),
+        # eligible for all insurances
+        (50000, CAR, HOUSE, []),
+        # one cases
+        (50000, None, None, ["auto", "home"]),
+        (0, CAR, None, ["disability", "home"]),
+        (0, None, HOUSE, ["disability", "auto"]),
     ],
 )
-def test_basic_check(profile_payload, income, vehicle, house, risk):
-    profile_payload["income"] = income
-    profile_payload["vehicle"] = vehicle
-    profile_payload["house"] = house
-
-    profile = UserProfile(**profile_payload)
-    new_risk = BasicCheck().check(profile, risk)
-
-    assert new_risk == risk
-
-
-@pytest.mark.parametrize(
-    "income,vehicle,house",
-    [
-        (0, None, None),
-        (0, None, {"ownership_status": "mortgaged"}),
-    ],
-)
-def test_basic_check_ineligibile(profile_payload, income, vehicle, house, risk):
+def test_basic_check(
+    profile_payload, income, vehicle, house, all_regular_risk, ineligible
+):
     profile_payload["income"] = income
     profile_payload["vehicle"] = vehicle
     profile_payload["house"] = house
     profile = UserProfile(**profile_payload)
 
-    # change only disability, auto and home to ineligible
-    expected = {
-        k: ScoreEnum.ineligible if k.name in ["disability", "auto", "home"] else v
-        for k, v in risk.items()
-    }
+    expected_risk = modify_risk(all_regular_risk, ineligible=ineligible)
 
-    new_risk = BasicCheck().check(profile, risk)
+    risk = BasicCheck().check(profile, all_regular_risk)
 
-    assert new_risk == expected
+    assert risk == expected_risk
 
 
 @pytest.mark.parametrize("age", [20, 30, 40, 50, 59, 60])
-def test_age_check(profile_payload, age, risk):
+def test_age_check(profile_payload, age, all_regular_risk):
     profile_payload["age"] = 59
     profile = UserProfile(**profile_payload)
-    new_risk = AgeCheck().check(profile, risk)
+    risk = AgeCheck().check(profile, all_regular_risk)
 
-    assert new_risk == risk
+    assert risk == all_regular_risk
 
 
 @pytest.mark.parametrize("age", [61, 70, 80, 90])
-def test_age_ineligibile(profile_payload, age, risk):
+def test_age_ineligibile(profile_payload, age, all_regular_risk):
     profile_payload["age"] = age
     profile = UserProfile(**profile_payload)
 
-    # change only disability, auto and home to ineligible
-    expected = {
-        k: ScoreEnum.ineligible if k.name in ["life", "disability"] else v
-        for k, v in risk.items()
-    }
+    expected_risk = modify_risk(all_regular_risk, ineligible=["life", "disability"])
 
-    new_risk = AgeCheck().check(profile, risk)
+    risk = AgeCheck().check(profile, all_regular_risk)
 
-    assert new_risk == expected
+    assert risk == expected_risk

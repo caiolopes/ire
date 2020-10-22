@@ -5,19 +5,25 @@ from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 
 class BasicCheck(IneligibilityCheck):
+    """
+    If the user doesn’t have income, vehicles or houses,
+    she is ineligible for disability, auto, and home insurance, respectively.
+    """
+
     def check(
         self, profile: UserProfile, risk: Dict[Insurance, ScoreEnum]
     ) -> Dict[Insurance, ScoreEnum]:
-        """
-        If the user doesn’t have income, vehicles or houses,
-        she is ineligible for disability, auto, and home insurance, respectively.
-        """
-        new_risk = risk.copy()
-        has_house = profile.house and profile.house.ownership_status == "owned"
 
-        if profile.income == 0 and not profile.vehicle and not has_house:
-            for insurance in [Insurance.auto, Insurance.home, Insurance.disability]:
-                new_risk[insurance] = ScoreEnum.ineligible
+        new_risk = risk.copy()
+
+        if profile.income == 0:
+            new_risk[Insurance.disability] = ScoreEnum.ineligible
+
+        if not profile.vehicle:
+            new_risk[Insurance.auto] = ScoreEnum.ineligible
+
+        if not profile.house:
+            new_risk[Insurance.home] = ScoreEnum.ineligible
 
         return new_risk
 
