@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from app.api.v1.routes import api_router
-from app.core.config import settings
+from ire.api.v1.routes import api_router
+from ire.core.config import settings
 
 
 app = FastAPI(title=settings.PROJECT_NAME)

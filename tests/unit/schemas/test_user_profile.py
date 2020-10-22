@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from app.schemas import UserProfile
+from ire.schemas import UserProfile
 
 
 def test_general_structure(profile_payload):

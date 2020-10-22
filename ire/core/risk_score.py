@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Dict
 
-from app.core.interfaces import RiskScore
-from app.schemas import UserProfile, OwnershipStatus, MaritalStatus, Insurance
+from ire.core.interfaces import RiskScore
+from ire.schemas import UserProfile, OwnershipStatus, MaritalStatus, Insurance
 
 
 class AgeScore(RiskScore):

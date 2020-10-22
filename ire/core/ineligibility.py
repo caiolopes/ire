@@ -1,7 +1,7 @@
 from typing import Dict
 
-from app.core.interfaces import IneligibilityCheck
-from app.schemas import Insurance, ScoreEnum, UserProfile
+from ire.core.interfaces import IneligibilityCheck
+from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 
 class BasicCheck(IneligibilityCheck):

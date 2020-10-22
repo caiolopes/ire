@@ -1,7 +1,7 @@
 import abc
 from typing import Dict
 
-from app.schemas import Insurance, ScoreEnum, UserProfile
+from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 
 class RiskScore(abc.ABC):

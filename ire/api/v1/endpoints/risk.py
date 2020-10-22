@@ -2,8 +2,8 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from app import schemas
-from app.services.risk import RiskService
+from ire import schemas
+from ire.services.risk import RiskService
 
 router = APIRouter()
 

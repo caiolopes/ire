@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
-from app.core.config import settings
+from ire.core.config import settings
 
-from app.main import app
+from ire.main import app
 
 
 @pytest.fixture(scope="module")

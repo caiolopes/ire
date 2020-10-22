@@ -2,9 +2,9 @@ from abc import ABC
 from types import ModuleType
 from typing import Dict, List, Type
 
-from app.core import risk_score, ineligibility
-from app.core.interfaces import RiskScore, IneligibilityCheck
-from app.schemas import Insurance, ScoreEnum, RiskProfile, UserProfile
+from ire.core import risk_score, ineligibility
+from ire.core.interfaces import RiskScore, IneligibilityCheck
+from ire.schemas import Insurance, ScoreEnum, RiskProfile, UserProfile
 
 
 class RiskService:
