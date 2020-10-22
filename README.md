@@ -23,7 +23,7 @@ poetry shell
 ```
 
 ```
-uvicorn main:app --reload
+uvicorn main:app --reload --app-dir ire
 ```
 
 ## Documentation
