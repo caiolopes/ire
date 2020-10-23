@@ -1,5 +1,5 @@
-from .user_profile import UserProfile, OwnershipStatus, MaritalStatus
-from .risk_profile import RiskProfile, ScoreEnum, Insurance
+from .risk_profile import Insurance, RiskProfile, ScoreEnum
+from .user_profile import MaritalStatus, OwnershipStatus, UserProfile
 
 __all__ = [
     "UserProfile",

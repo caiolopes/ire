@@ -1,7 +1,7 @@
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator, PositiveInt
+from pydantic import BaseModel, Field, PositiveInt, validator
 
 
 class MaritalStatus(str, Enum):

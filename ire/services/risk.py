@@ -1,9 +1,9 @@
 from typing import Any, Dict, List
 
-from ire.core.interfaces import RiskScore, IneligibilityCheck
 from ire.core.config import settings
+from ire.core.interfaces import IneligibilityCheck, RiskScore
 from ire.core.utils import get_class
-from ire.schemas import Insurance, ScoreEnum, RiskProfile, UserProfile
+from ire.schemas import Insurance, RiskProfile, ScoreEnum, UserProfile
 
 
 class RiskService:

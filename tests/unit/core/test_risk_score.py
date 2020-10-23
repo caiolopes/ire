@@ -1,7 +1,7 @@
 import pytest
-from ire.schemas import Insurance, UserProfile
 
 from ire.core.risk_score import AgeScore
+from ire.schemas import Insurance, UserProfile
 
 
 @pytest.fixture

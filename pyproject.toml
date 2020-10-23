@@ -9,6 +9,7 @@ python = "^3.7"
 fastapi = "^0.61.1"
 uvicorn = "^0.12.2"
 requests = "^2.24.0"
+isort = "^5.6.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
@@ -21,3 +22,8 @@ pytest-cov = "^2.10.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+src_paths = ["ire", "tests"]
+multi_line_output = 3

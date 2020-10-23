@@ -1,8 +1,9 @@
-from typing import Optional, Dict
-import pytest
-from ire.schemas import UserProfile, ScoreEnum, Insurance
-from ire.core.ineligibility import BasicCheck, AgeCheck
+from typing import Dict, Optional
 
+import pytest
+
+from ire.core.ineligibility import AgeCheck, BasicCheck
+from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 CAR = {"year": 2015}
 HOUSE = {"ownership_status": "owned"}

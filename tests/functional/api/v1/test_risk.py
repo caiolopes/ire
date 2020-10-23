@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
-from ire.core.config import settings
 
+from ire.core.config import settings
 from ire.main import app
 
 
