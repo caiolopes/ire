@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
 from ire.core.config import settings
-from ire.core.interfaces import IneligibilityCheck, RiskScore
+from ire.core.interfaces import IneligibilityCheckAdpater, RiskScoreAdapter
 from ire.core.utils import get_class
 from ire.schemas import Insurance, RiskProfile, ScoreEnum, UserProfile
 
@@ -19,13 +19,13 @@ class RiskService:
         risk_score_dict = self._build_risk()
 
         for rule in self.risk_score_rules:
-            if issubclass(rule, RiskScore):
+            if issubclass(rule, RiskScoreAdapter):
                 risk_score_dict = rule().calculate(self.profile, risk_score_dict)
 
         risk = self._mapper(risk_score_dict)
 
         for rule in self.ineligibility_rules:
-            if issubclass(rule, IneligibilityCheck):
+            if issubclass(rule, IneligibilityCheckAdpater):
                 risk = rule().check(self.profile, risk)
 
         return RiskProfile(**{k.name: v for k, v in risk.items()})

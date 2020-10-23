@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Dict
 
-from ire.core.interfaces import RiskScore
+from ire.core.interfaces import RiskScoreAdapter
 from ire.schemas import Insurance, MaritalStatus, OwnershipStatus, UserProfile
 
 
-class AgeScore(RiskScore):
+class AgeScore(RiskScoreAdapter):
     """
     If the user is under 30 years old
         - deduct 2 risk points from all lines of insurance
@@ -26,7 +26,7 @@ class AgeScore(RiskScore):
         return new_risk
 
 
-class IncomeScore(RiskScore):
+class IncomeScore(RiskScoreAdapter):
     """
     If her income is above $200k:
         - deduct 1 risk point from all lines of insurance
@@ -43,7 +43,7 @@ class IncomeScore(RiskScore):
         return new_risk
 
 
-class HouseScore(RiskScore):
+class HouseScore(RiskScoreAdapter):
     """
     If the user's house is mortgaged:
         - add 1 risk point to her home score
@@ -65,7 +65,7 @@ class HouseScore(RiskScore):
         return new_risk
 
 
-class DependentsScore(RiskScore):
+class DependentsScore(RiskScoreAdapter):
     """
     If the user has dependents:
         - add 1 risk point to both the disability and life scores.
@@ -83,7 +83,7 @@ class DependentsScore(RiskScore):
         return new_risk
 
 
-class MaritalStatusScore(RiskScore):
+class MaritalStatusScore(RiskScoreAdapter):
     """
     If the user is married:
         - add 1 risk point to the life score
@@ -102,7 +102,7 @@ class MaritalStatusScore(RiskScore):
         return new_risk
 
 
-class VehicleScore(RiskScore):
+class VehicleScore(RiskScoreAdapter):
     """
     If the user's vehicle was produced in the last 5 years:
         - add 1 risk point to that vehicle’s score

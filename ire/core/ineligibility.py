@@ -1,10 +1,10 @@
 from typing import Dict
 
-from ire.core.interfaces import IneligibilityCheck
+from ire.core.interfaces import IneligibilityCheckAdpater
 from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 
-class BasicCheck(IneligibilityCheck):
+class BasicCheck(IneligibilityCheckAdpater):
     """
     If the user doesn’t have income, vehicles or houses,
     she is ineligible for disability, auto, and home insurance, respectively.
@@ -28,7 +28,7 @@ class BasicCheck(IneligibilityCheck):
         return new_risk
 
 
-class AgeCheck(IneligibilityCheck):
+class AgeCheck(IneligibilityCheckAdpater):
     """
     If the user is over 60 years old, she is ineligible
     for disability and life insurance.

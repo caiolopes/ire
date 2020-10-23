@@ -4,7 +4,7 @@ from typing import Dict
 from ire.schemas import Insurance, ScoreEnum, UserProfile
 
 
-class RiskScore(abc.ABC):
+class RiskScoreAdapter(abc.ABC):
     @abc.abstractmethod
     def calculate(
         self, profile: UserProfile, risk: Dict[Insurance, int]
@@ -12,7 +12,7 @@ class RiskScore(abc.ABC):
         raise NotImplementedError
 
 
-class IneligibilityCheck(abc.ABC):
+class IneligibilityCheckAdpater(abc.ABC):
     @abc.abstractmethod
     def check(
         self, profile: UserProfile, risk: Dict[Insurance, ScoreEnum]
