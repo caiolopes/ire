@@ -1,19 +1,21 @@
-from abc import ABC
-from types import ModuleType
-from typing import Dict, List, Type
+from typing import Any, Dict, List
 
-from ire.core import risk_score, ineligibility
 from ire.core.interfaces import RiskScore, IneligibilityCheck
+from ire.core.config import settings
+from ire.core.utils import get_class
 from ire.schemas import Insurance, ScoreEnum, RiskProfile, UserProfile
 
 
 class RiskService:
     def __init__(self, profile: UserProfile) -> None:
         self.profile = profile
-        self.risk_score_rules = self._get_rules(risk_score, RiskScore)
-        self.ineligibility_rules = self._get_rules(ineligibility, IneligibilityCheck)
+        self.risk_score_rules = self._get_rules(settings.RISK_SCORE_RULES)
+        self.ineligibility_rules = self._get_rules(settings.INELIGIBILITY_RULES)
 
     def apply_rules(self) -> RiskProfile:
+        """
+        This method will go through all the classes
+        """
         risk_score_dict = self._build_risk()
 
         for rule in self.risk_score_rules:
@@ -33,18 +35,6 @@ class RiskService:
         return {i: 0 for i in Insurance}
 
     @staticmethod
-    def _get_rules(module: ModuleType, base_class: Type[ABC]) -> List[Type[ABC]]:
-        rules = []
-        for v in vars(module).values():
-            try:
-                if issubclass(v, base_class) and v.__name__ != base_class.__name__:
-                    rules.append(v)
-            except TypeError:
-                pass
-
-        return rules
-
-    @staticmethod
     def _mapper(risk: Dict[Insurance, int]) -> Dict[Insurance, ScoreEnum]:
 
         new_risk = {}
@@ -59,3 +49,7 @@ class RiskService:
                 new_risk[ins] = ScoreEnum.regular
 
         return new_risk
+
+    @staticmethod
+    def _get_rules(config: List[str]) -> List[Any]:
+        return [get_class(rule) for rule in config]
