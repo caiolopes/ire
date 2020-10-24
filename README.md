@@ -19,16 +19,13 @@ This application receives the user profile through the API and transforms it int
 
 **Required steps:**
 
-Then:
-
-Install dependencies.
+First, you must install dependencies by running:
 
 ```
 poetry install
 ```
 
 Spawn a virtualenv and activate it.
-
 
 ```
 poetry shell
